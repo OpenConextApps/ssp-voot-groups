@@ -9,7 +9,7 @@
  * @package simpleSAMLphp
  * @version $Id$
  */
-class sspmod_core_Auth_Process_AttributeAddVootGroups extends SimpleSAML_Auth_ProcessingFilter
+class sspmod_vootGroups_Auth_Process_AttributeAddVootGroups extends SimpleSAML_Auth_ProcessingFilter
 {
     /**
      * The VOOT endpoint to query for group membership
