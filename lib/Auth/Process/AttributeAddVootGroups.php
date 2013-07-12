@@ -2,6 +2,10 @@
 
 require_once dirname(dirname(dirname(__DIR__))) . '/vendor/autoload.php';
 
+use fkooman\Guzzle\Plugin\BearerAuth\BearerAuth;
+use fkooman\Guzzle\Plugin\BearerAuth\Exception\BearerErrorResponseException;
+use Guzzle\Http\Exception\BadResponseException;
+
 /**
  * Filter to add group membership to attributes from VOOT provider.
  *
@@ -36,10 +40,10 @@ class sspmod_vootgroups_Auth_Process_AttributeAddVootGroups extends SimpleSAML_A
         $this->di['config'] = function() {
             $config = new \fkooman\Config\Config(array(
                 "registration" => array(
-                    "php-voot-client" => array(
+                    "foo" => array(
                         "authorize_endpoint" => "http://localhost/frkonext/php-oauth/authorize.php",
-                        "client_id" => "php-voot-client",
-                        "client_secret" => "f00b4r",
+                        "client_id" => "foo",
+                        "client_secret" => "foobar",
                         "token_endpoint" => "http://localhost/frkonext/php-oauth/token.php"
                     ),
                 ),
@@ -79,7 +83,7 @@ class sspmod_vootgroups_Auth_Process_AttributeAddVootGroups extends SimpleSAML_A
 
         $client = new \fkooman\OAuth\Client\Api();
         $client->setDiContainer($this->di);
-        $client->setCallbackId("php-voot-client");
+        $client->setCallbackId("foo");
         $client->setUserId($attributes['uid'][0]);
         $client->setScope(array("http://openvoot.org/groups"));
 
@@ -101,21 +105,29 @@ class sspmod_vootgroups_Auth_Process_AttributeAddVootGroups extends SimpleSAML_A
         }
         // try the request, if it fails mark token as invalid and try again
 
-        //$client->setReturnUri("http://localhost/frkonext/saml/");
+        try {
+            $bearerAuth = new BearerAuth($accessToken->getToken()->getAccessToken());
+            $this->di['http']->addSubscriber($bearerAuth);
+            $response = $this->di['http']->get($this->vootEndpoint)->send();
+            $jsonData = $response->getBody();
 
-        $response = $client->makeRequest($this->vootEndpoint);
-        //$jsonData = file_get_contents($this->vootEndpoint);
-        $jsonData = $response->getBody();
-        $data = json_decode($jsonData, TRUE);
-        $groups = array();
-        foreach ($data['entry'] as $e) {
-            $groups[] = $e['id'];
-        }
+            $data = json_decode($jsonData, TRUE);
+            $groups = array();
+            foreach ($data['entry'] as $e) {
+                $groups[] = $e['id'];
+            }
 
-        if (isset($attributes['groups'])) {
-            $attributes['groups'] = array_merge($attributes['groups'], $groups);
-        } else {
-            $attributes['groups'] = $groups;
+            if (isset($attributes['groups'])) {
+                $attributes['groups'] = array_merge($attributes['groups'], $groups);
+            } else {
+                $attributes['groups'] = $groups;
+            }
+        } catch (BearerErrorResponseException $e) {
+            echo $e->getMessage() . PHP_EOL;
+            die();
+        } catch (BadResponseException $e) {
+            echo $e->getMessage() . PHP_EOL;
+            die();
         }
     }
 
