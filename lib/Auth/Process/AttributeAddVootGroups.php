@@ -1,5 +1,7 @@
 <?php
 
+require_once dirname(dirname(dirname(__DIR__))) . '/vendor/autoload.php';
+
 /**
  * Filter to add group membership to attributes from VOOT provider.
  *
@@ -9,12 +11,13 @@
  * @package simpleSAMLphp
  * @version $Id$
  */
-class sspmod_vootGroups_Auth_Process_AttributeAddVootGroups extends SimpleSAML_Auth_ProcessingFilter
+class sspmod_vootgroups_Auth_Process_AttributeAddVootGroups extends SimpleSAML_Auth_ProcessingFilter
 {
-    /**
-     * The VOOT endpoint to query for group membership
-     */
+
     private $vootEndpoint;
+
+    /** @var \Pimple */
+    private $di;
 
     /**
      * Initialize this filter.
@@ -28,10 +31,36 @@ class sspmod_vootGroups_Auth_Process_AttributeAddVootGroups extends SimpleSAML_A
 
         assert('is_array($config)');
 
+        $this->di = new \fkooman\OAuth\Client\DiContainer();
+
+        $this->di['config'] = function() {
+            $config = new \fkooman\Config\Config(array(
+                "registration" => array(
+                    "php-voot-client" => array(
+                        "authorize_endpoint" => "http://localhost/frkonext/php-oauth/authorize.php",
+                        "client_id" => "php-voot-client",
+                        "client_secret" => "f00b4r",
+                        "token_endpoint" => "http://localhost/frkonext/php-oauth/token.php"
+                    ),
+                ),
+                "log" => array(
+                    "level" => 100,
+                    "file" => "/Library/WebServer/Documents/frkonext/ssp/sp/data/php-oauth-client.log"
+                ),
+                "storage" => array(
+                    "dsn" => "sqlite:/Library/WebServer/Documents/frkonext/ssp/sp/data/client.sqlite",
+                    "persistentConnection" => false
+                ),
+            ));
+
+            return $config;
+        };
+
         if (!isset($config['vootEndpoint'])) {
             throw new Exception('vootEndpoint configuration option not set');
         }
         $this->vootEndpoint = $config['vootEndpoint'];
+
     }
 
     /**
@@ -39,18 +68,40 @@ class sspmod_vootGroups_Auth_Process_AttributeAddVootGroups extends SimpleSAML_A
      *
      * Add or replace existing attributes with the configured values.
      *
-     * @param array &$request The current request
+     * @param array &$state The current request
      */
-    public function process(&$request)
+    public function process(&$state)
     {
-        assert('is_array($request)');
-        assert('array_key_exists("Attributes", $request)');
+        assert('is_array($state)');
+        assert('array_key_exists("Attributes", $state)');
 
-        $attributes =& $request['Attributes'];
+        $attributes =& $state['Attributes'];
 
-        require_once '/Library/WebServer/Documents/frkonext/php-oauth-client/vendor/autoload.php';
-        $client = new \fkooman\OAuth\Client\Api("php-voot-client", $attributes['uid'][0], array("http://openvoot.org/groups"));
-        $client->setReturnUri("http://localhost/frkonext/saml/");
+        $client = new \fkooman\OAuth\Client\Api();
+        $client->setDiContainer($this->di);
+        $client->setCallbackId("php-voot-client");
+        $client->setUserId($attributes['uid'][0]);
+        $client->setScope(array("http://openvoot.org/groups"));
+
+        //die($this->di['config']->s("storage")->l("dsn"));
+
+        $accessToken = $client->getAccessToken();
+        if (FALSE === $accessToken) {
+            // we don't have an access token, get a new one
+
+            // do some state stuff
+            $client->setReturnUri("http://www.example.org");
+            $id = SimpleSAML_Auth_State::saveState($state, 'vootgroups:authorize');
+
+            $client->setState($id);
+            $returnUri = $client->getAuthorizeUri();
+
+            //$url = SimpleSAML_Module::getModuleURL('ssp-voot-groups/callback.php');
+            SimpleSAML_Utilities::redirect($returnUri);
+        }
+        // try the request, if it fails mark token as invalid and try again
+
+        //$client->setReturnUri("http://localhost/frkonext/saml/");
 
         $response = $client->makeRequest($this->vootEndpoint);
         //$jsonData = file_get_contents($this->vootEndpoint);
