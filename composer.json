@@ -1,0 +1,6 @@
+{
+    "name": "fkooman/ssp-voot-groups", 
+    "require": {
+        "php-oauth-client": "dev-master"
+    }
+}
