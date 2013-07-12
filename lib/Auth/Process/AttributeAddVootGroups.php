@@ -87,25 +87,16 @@ class sspmod_vootgroups_Auth_Process_AttributeAddVootGroups extends SimpleSAML_A
         $client->setUserId($attributes['uid'][0]);
         $client->setScope(array("http://openvoot.org/groups"));
 
-        //die($this->di['config']->s("storage")->l("dsn"));
-
         $accessToken = $client->getAccessToken();
         if (FALSE === $accessToken) {
             // we don't have an access token, get a new one
-
-            // do some state stuff
             $client->setReturnUri("http://www.example.org");
             $id = SimpleSAML_Auth_State::saveState($state, 'vootgroups:authorize');
-
             $client->setState($id);
-            $returnUri = $client->getAuthorizeUri();
-
-            //$url = SimpleSAML_Module::getModuleURL('ssp-voot-groups/callback.php');
-            SimpleSAML_Utilities::redirect($returnUri);
+            SimpleSAML_Utilities::redirect($client->getAuthorizeUri());
         }
-        // try the request, if it fails mark token as invalid and try again
 
-        try {
+//        try {
             $bearerAuth = new BearerAuth($accessToken->getToken()->getAccessToken());
             $this->di['http']->addSubscriber($bearerAuth);
             $response = $this->di['http']->get($this->vootEndpoint)->send();
@@ -122,13 +113,11 @@ class sspmod_vootgroups_Auth_Process_AttributeAddVootGroups extends SimpleSAML_A
             } else {
                 $attributes['groups'] = $groups;
             }
-        } catch (BearerErrorResponseException $e) {
-            echo $e->getMessage() . PHP_EOL;
-            die();
-        } catch (BadResponseException $e) {
-            echo $e->getMessage() . PHP_EOL;
-            die();
-        }
+//         } catch (BearerErrorResponseException $e) {
+//             die($e->getMessage());
+//         } catch (BadResponseException $e) {
+//             die($e->getMessage());
+//         }
     }
 
 }

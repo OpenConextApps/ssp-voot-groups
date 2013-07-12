@@ -39,4 +39,5 @@ $request = \Symfony\Component\HttpFoundation\Request::createFromGlobals();
 $service = new \fkooman\OAuth\Client\Callback($di);
 $service->handleCallback($request);
 
+// FIXME: the resumeProcessing does not work yet... how do you deal with this?!
 SimpleSAML_Auth_ProcessingChain::resumeProcessing($state);
