@@ -33,6 +33,7 @@ git clone -b $TAG https://github.com/fkooman/ssp-voot-groups.git
 cd ssp-voot-groups
 php /tmp/composer.phar install
 rm composer.json composer.lock
-rm -rf ssp-voot-groups/.git
+rm -rf .git
+rm -f .gitignore
 tar -czf ssp-voot-groups-$TAG.tar.gz ssp-voot-groups
 )
