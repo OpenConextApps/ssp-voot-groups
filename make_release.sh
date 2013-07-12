@@ -35,5 +35,7 @@ php /tmp/composer.phar install
 rm composer.json composer.lock
 rm -rf .git
 rm -f .gitignore
+cd ..
 tar -czf ssp-voot-groups-$TAG.tar.gz ssp-voot-groups
+rm -rf ssp-voot-groups
 )
