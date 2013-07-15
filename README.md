@@ -4,6 +4,17 @@ group memberships from an API service protected with OAuth 2.0 using the
 [VOOT](https://github.com/fkooman/voot-specification/blob/master/VOOT.md) 
 protocol.
 
+# Installation
+You can install this module in the `modules` directory of simpleSAMLphp. We 
+assume you installed simpleSAMLphp in `/var/simplesamlphp`:
+
+    cd /var/simplesamlphp/modules
+    git clone https://github.com/fkooman/ssp-voot-groups.git vootgroups
+
+To enable the module:
+
+    touch /var/simplesamlphp/modules/vootgroups/enable
+
 # Configuration
 Below is an example configuration. You can place this in 
 `metadata/saml20-idp-remote.php` for the IdP you want to attach the group
@@ -28,11 +39,5 @@ simpleSAMLphp is installed. For example:
 
     http://localhost/simplesaml/module.php/vootgroups/callback.php
 
-This assumes that simpleSAMLphp is installed at `http://localhost/simplesaml`.
-
-Also, do not forget to enable the `vootgroups` module in simpleSAMLphp:
-
-    cd /var/simplesamlphp
-    touch modules/vootgroups/enable
-
-Now that should be all.
+This assumes that simpleSAMLphp is installed at `http://localhost/simplesaml`,
+modify the URL accordingly.
