@@ -6,21 +6,25 @@ if (!array_key_exists('state', $_REQUEST)) {
         throw new SimpleSAML_Error_BadRequest('Missing required state query parameter.');
 }
 
-$di = new sspmod_vootgroups_SspDiContainer();
+$pimple = new sspmod_vootgroups_SspDiContainer();
 
 $id = $_REQUEST['state'];
 $state = SimpleSAML_Auth_State::loadState($id, 'vootgroups:authorize');
 
 $cb = new \fkooman\OAuth\Client\Callback();
+$cb->setClientConfig("foo", $pimple['clientConfig']);
+$cb->setStorage($pimple['storage']);
+$cb->setHttpClient($pimple['httpClient']);
+
 $accessToken = $cb->handleCallback($_GET);
 
 // obtain attributes from state
 $attributes =& $state['Attributes'];
 
-$vootCall = new sspmod_vootgroups_VootCall($di);
+$vootCall = new sspmod_vootgroups_VootCall($pimple);
 if (false === $vootCall->makeCall($accessToken->getAccessToken(), $attributes)) {
     // unable to fetch groups, something is wrong with the token?
-    die("unable to fetch groups with seemingly valid bearer token");
+    throw new Exception("unable to fetch groups with seemingly valid bearer token");
 }
 
 // FIXME: the resumeProcessing does not work yet... how do you deal with this?!

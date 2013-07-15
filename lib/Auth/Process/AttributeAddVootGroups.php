@@ -14,7 +14,7 @@ require_once dirname(dirname(dirname(__DIR__))) . '/vendor/autoload.php';
 class sspmod_vootgroups_Auth_Process_AttributeAddVootGroups extends SimpleSAML_Auth_ProcessingFilter
 {
     /** @var \Pimple */
-    private $di;
+    private $pimple;
 
     /**
      * Initialize this filter.
@@ -26,7 +26,7 @@ class sspmod_vootgroups_Auth_Process_AttributeAddVootGroups extends SimpleSAML_A
     {
         parent::__construct($config, $reserved);
         assert('is_array($config)');
-        $this->di = new sspmod_vootgroups_SspDiContainer();
+        $this->pimple = new sspmod_vootgroups_SspDiContainer();
     }
 
     /**
@@ -44,9 +44,10 @@ class sspmod_vootgroups_Auth_Process_AttributeAddVootGroups extends SimpleSAML_A
         $attributes =& $state['Attributes'];
 
         $client = new \fkooman\OAuth\Client\Api();
-        $client->setClientConfig($this->di['clientConfig']);
-        $client->setStorage($this->di['storage']);
-        $client->setHttpClient($this->di['httpClient']);
+
+        $client->setClientConfig("foo", $this->pimple['clientConfig']);
+        $client->setStorage($this->pimple['storage']);
+        $client->setHttpClient($this->pimple['httpClient']);
 
         $client->setUserId($attributes['uid'][0]);
         $client->setScope(array("http://openvoot.org/groups"));
@@ -58,10 +59,10 @@ class sspmod_vootgroups_Auth_Process_AttributeAddVootGroups extends SimpleSAML_A
             $client->setState($id);
             SimpleSAML_Utilities::redirect($client->getAuthorizeUri());
         } else {
-            $vootCall = new sspmod_vootgroups_VootCall($this->di);
+            $vootCall = new sspmod_vootgroups_VootCall($this->pimple);
             if (false === $vootCall->makeCall($accessToken->getAccessToken(), $attributes)) {
                 // unable to fetch groups, something is wrong with the token?
-                die("unable to fetch groups with seemingly valid bearer token");
+                throw new Exception("unable to fetch groups with seemingly valid bearer token");
             }
         }
     }

@@ -31,9 +31,12 @@ class sspmod_vootgroups_VootCall
 
             return true;
         } catch (\fkooman\Guzzle\Plugin\BearerAuth\Exception\BearerErrorResponseException $e) {
+            die($e->getMessage());
             // something was wrong with the Bearer token...
             return false;
         } catch (\Guzzle\Http\Exception\BadResponseException $e) {
+
+            die($e->getMessage());
             // something was wrong with the request...
             return false;
         }
