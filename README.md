@@ -12,12 +12,12 @@ fetching to.
     'authproc' => array(
         40 => array (
             'class' => 'vootgroups:AttributeAddVootGroups',
-            'vootEndpoint' => '"http://localhost/frkonext/php-voot-proxy/voot.php/groups/@me";'
+            'vootEndpoint' => 'http://localhost/frkonext/php-voot-proxy/voot.php/groups/@me',
             'clientConfig' => array(
-                "authorize_endpoint" => "http://localhost/frkonext/php-oauth/authorize.php",
-                "client_id" => "foo",
-                "client_secret" => "foobar",
-                "token_endpoint" => "http://localhost/frkonext/php-oauth/token.php"            
+                'authorize_endpoint' => 'http://localhost/frkonext/php-oauth/authorize.php',
+                'client_id' => 'foo',
+                'client_secret' => 'foobar',
+                'token_endpoint' => 'http://localhost/frkonext/php-oauth/token.php' 
             ),            
         ),
     ),

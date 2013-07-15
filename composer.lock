@@ -49,12 +49,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fkooman/php-oauth-client.git",
-                "reference": "efd37373e6d00b9d54ce3df49b79f7db7131a1c3"
+                "reference": "c97a28d2c1827a4f91269159ba9de07d1ea8ad60"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fkooman/php-oauth-client/zipball/efd37373e6d00b9d54ce3df49b79f7db7131a1c3",
-                "reference": "efd37373e6d00b9d54ce3df49b79f7db7131a1c3",
+                "url": "https://api.github.com/repos/fkooman/php-oauth-client/zipball/c97a28d2c1827a4f91269159ba9de07d1ea8ad60",
+                "reference": "c97a28d2c1827a4f91269159ba9de07d1ea8ad60",
                 "shasum": ""
             },
             "require": {
@@ -81,7 +81,7 @@
                 }
             ],
             "description": "PHP OAuth 2.0 Client",
-            "time": "2013-07-15 07:58:51"
+            "time": "2013-07-15 19:15:13"
         },
         {
             "name": "guzzle/guzzle",
