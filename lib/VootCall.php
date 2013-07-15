@@ -12,13 +12,10 @@ class sspmod_vootgroups_VootCall
 
     public function makeCall($bearerToken, &$attributes)
     {
-        $guzzle = $this->p['http'];
-        $vootEndpoint = $this->p['config']->l('vootEndpoint');
-
         try {
             $bearerAuth = new \fkooman\Guzzle\Plugin\BearerAuth\BearerAuth($bearerToken);
-            $guzzle->addSubscriber($bearerAuth);
-            $response = $guzzle->get($vootEndpoint)->send();
+            $this->p['httpClient']->addSubscriber($bearerAuth);
+            $response = $this->p['httpClient']->get($this->p['vootEndpoint'])->send();
             $jsonData = $response->getBody();
             $data = json_decode($jsonData, TRUE);
             $groups = array();

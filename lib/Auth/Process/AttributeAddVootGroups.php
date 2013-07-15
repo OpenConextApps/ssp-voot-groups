@@ -44,22 +44,22 @@ class sspmod_vootgroups_Auth_Process_AttributeAddVootGroups extends SimpleSAML_A
         $attributes =& $state['Attributes'];
 
         $client = new \fkooman\OAuth\Client\Api();
-        $client->setDiContainer($this->di);
-        $client->setCallbackId("foo");
+        $client->setClientConfig($this->di['clientConfig']);
+        $client->setStorage($this->di['storage']);
+        $client->setHttpClient($this->di['httpClient']);
+
         $client->setUserId($attributes['uid'][0]);
         $client->setScope(array("http://openvoot.org/groups"));
 
         $accessToken = $client->getAccessToken();
         if (false === $accessToken) {
             // we don't have an access token, get a new one
-            $client->setReturnUri("http://www.example.org");
             $id = SimpleSAML_Auth_State::saveState($state, 'vootgroups:authorize');
             $client->setState($id);
             SimpleSAML_Utilities::redirect($client->getAuthorizeUri());
         } else {
             $vootCall = new sspmod_vootgroups_VootCall($this->di);
-            $groups = $vootCall->makeCall($accessToken->getToken()->getAccessToken(), $attributes);
-            if (false === $groups) {
+            if (false === $vootCall->makeCall($accessToken->getAccessToken(), $attributes)) {
                 // unable to fetch groups, something is wrong with the token?
                 die("unable to fetch groups with seemingly valid bearer token");
             }

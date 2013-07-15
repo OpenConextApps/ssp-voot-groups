@@ -11,17 +11,14 @@ $di = new sspmod_vootgroups_SspDiContainer();
 $id = $_REQUEST['state'];
 $state = SimpleSAML_Auth_State::loadState($id, 'vootgroups:authorize');
 
-$request = \Symfony\Component\HttpFoundation\Request::createFromGlobals();
-
-$service = new \fkooman\OAuth\Client\Callback($di);
-$service->handleCallback($request);
+$cb = new \fkooman\OAuth\Client\Callback();
+$accessToken = $cb->handleCallback($_GET);
 
 // obtain attributes from state
 $attributes =& $state['Attributes'];
 
 $vootCall = new sspmod_vootgroups_VootCall($di);
-$groups = $vootCall->makeCall($accessToken->getToken()->getAccessToken(), $attributes);
-if (false === $groups) {
+if (false === $vootCall->makeCall($accessToken->getAccessToken(), $attributes)) {
     // unable to fetch groups, something is wrong with the token?
     die("unable to fetch groups with seemingly valid bearer token");
 }
