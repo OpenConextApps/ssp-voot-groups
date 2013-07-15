@@ -15,10 +15,6 @@ class sspmod_vootgroups_SspDiContainer extends \Pimple
 
         $this['vootEndpoint'] = "http://localhost/frkonext/php-voot-proxy/voot.php/groups/@me";
 
-        $this['httpClient'] = function() {
-            return new \Guzzle\Http\Client();
-        };
-
         $this['storage'] = function() {
             return new \fkooman\OAuth\Client\SessionStorage();
         };

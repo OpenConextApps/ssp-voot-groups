@@ -47,7 +47,7 @@ class sspmod_vootgroups_Auth_Process_AttributeAddVootGroups extends SimpleSAML_A
 
         $client->setClientConfig("foo", $this->pimple['clientConfig']);
         $client->setStorage($this->pimple['storage']);
-        $client->setHttpClient($this->pimple['httpClient']);
+        $client->setHttpClient(new \Guzzle\Http\Client());
 
         $client->setUserId($attributes['uid'][0]);
         $client->setScope(array("http://openvoot.org/groups"));
@@ -59,7 +59,8 @@ class sspmod_vootgroups_Auth_Process_AttributeAddVootGroups extends SimpleSAML_A
             $client->setState($id);
             SimpleSAML_Utilities::redirect($client->getAuthorizeUri());
         } else {
-            $vootCall = new sspmod_vootgroups_VootCall($this->pimple);
+            $vootCall = new sspmod_vootgroups_VootCall();
+            $vootCall->setHttpClient(new \Guzzle\Http\Client());
             if (false === $vootCall->makeCall($accessToken->getAccessToken(), $attributes)) {
                 // unable to fetch groups, something is wrong with the token?
                 throw new Exception("unable to fetch groups with seemingly valid bearer token");

@@ -2,20 +2,24 @@
 
 class sspmod_vootgroups_VootCall
 {
-    /** @var \Pimple */
-    private $p;
+    private $httpClient;
 
-    public function __construct(\Pimple $p)
+    public function __construct()
     {
-        $this->p = $p;
+        $this->httpClient = null;
     }
 
-    public function makeCall($bearerToken, &$attributes)
+    public function setHttpClient(\Guzzle\Http\Client $httpClient)
+    {
+        $this->httpClient = $httpClient;
+    }
+
+    public function makeCall($vootEndPoint, $bearerToken, &$attributes)
     {
         try {
             $bearerAuth = new \fkooman\Guzzle\Plugin\BearerAuth\BearerAuth($bearerToken);
-            $this->p['httpClient']->addSubscriber($bearerAuth);
-            $response = $this->p['httpClient']->get($this->p['vootEndpoint'])->send();
+            $this->httpClient->addSubscriber($bearerAuth);
+            $response = $this->httpClient->get($vootEndPoint)->send();
             $jsonData = $response->getBody();
             $data = json_decode($jsonData, TRUE);
             $groups = array();
