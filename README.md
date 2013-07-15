@@ -15,6 +15,15 @@ To enable the module:
 
     touch /var/simplesamlphp/modules/vootgroups/enable
 
+Now you have to install some dependencies using
+[Composer](http://www.getcomposer.org). There is no external code bundled in 
+the code of this simpleSAMLphp module.
+
+    cd /var/simplesamlphp/modules/vootgroups
+    php /path/to/composer.phar install
+
+That should be all for the installation.
+
 # Configuration
 Below is an example configuration. You can place this in 
 `metadata/saml20-idp-remote.php` for the IdP you want to attach the group
