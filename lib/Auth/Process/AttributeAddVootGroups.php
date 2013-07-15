@@ -14,7 +14,9 @@ require_once dirname(dirname(dirname(__DIR__))) . '/vendor/autoload.php';
 class sspmod_vootgroups_Auth_Process_AttributeAddVootGroups extends SimpleSAML_Auth_ProcessingFilter
 {
     /** @var \Pimple */
-    private $pimple;
+    private $diContainer;
+
+    private $config;
 
     /**
      * Initialize this filter.
@@ -26,7 +28,8 @@ class sspmod_vootgroups_Auth_Process_AttributeAddVootGroups extends SimpleSAML_A
     {
         parent::__construct($config, $reserved);
         assert('is_array($config)');
-        $this->pimple = new sspmod_vootgroups_SspDiContainer();
+        $this->config = $config;
+        $this->diContainer = new sspmod_vootgroups_SspDiContainer($config);
     }
 
     /**
@@ -43,10 +46,12 @@ class sspmod_vootgroups_Auth_Process_AttributeAddVootGroups extends SimpleSAML_A
 
         $attributes =& $state['Attributes'];
 
+        $state['vootgroups:config'] = $this->config;
+
         $client = new \fkooman\OAuth\Client\Api();
 
-        $client->setClientConfig("foo", $this->pimple['clientConfig']);
-        $client->setStorage($this->pimple['storage']);
+        $client->setClientConfig("foo", $this->diContainer['clientConfig']);
+        $client->setStorage($this->diContainer['storage']);
         $client->setHttpClient(new \Guzzle\Http\Client());
 
         $client->setUserId($attributes['uid'][0]);

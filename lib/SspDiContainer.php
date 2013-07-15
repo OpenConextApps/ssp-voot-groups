@@ -2,20 +2,17 @@
 
 class sspmod_vootgroups_SspDiContainer extends \Pimple
 {
-    public function __construct()
+    public function __construct($config)
     {
-        $this['clientConfig'] = function() {
-            return \fkooman\OAuth\Client\ClientConfig::fromArray(array(
-                "authorize_endpoint" => "http://localhost/frkonext/php-oauth/authorize.php",
-                "client_id" => "foo",
-                "client_secret" => "foobar",
-                "token_endpoint" => "http://localhost/frkonext/php-oauth/token.php"
-            ));
+        $this['clientConfig'] = function() use ($config) {
+            return \fkooman\OAuth\Client\ClientConfig::fromArray($config['clientConfig']);
         };
 
-        $this['vootEndpoint'] = "http://localhost/frkonext/php-voot-proxy/voot.php/groups/@me";
+        $this['vootEndpoint'] = function() use ($config) {
+            return $config['vootEndpoint'];
+        };
 
-        $this['storage'] = function() {
+        $this['storage'] = function() use ($config) {
             return new \fkooman\OAuth\Client\SessionStorage();
         };
     }
