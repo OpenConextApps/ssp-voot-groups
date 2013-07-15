@@ -22,4 +22,17 @@ fetching to.
         ),
     ),
 
-This should be enough to get going.
+Above, the OAuth configuration is shown, but in addition you also need to 
+register a `redirect_uri` at the OAuth 2.0 service. This depends on where
+simpleSAMLphp is installed. For example:
+
+    http://localhost/simplesaml/module.php/vootgroups/callback.php
+
+This assumes that simpleSAMLphp is installed at `http://localhost/simplesaml`.
+
+Also, do not forget to enable the `vootgroups` module in simpleSAMLphp:
+
+    cd /var/simplesamlphp
+    touch modules/vootgroups/enable
+
+Now that should be all.
