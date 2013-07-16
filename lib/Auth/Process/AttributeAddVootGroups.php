@@ -66,9 +66,10 @@ class sspmod_vootgroups_Auth_Process_AttributeAddVootGroups extends SimpleSAML_A
         } else {
             $vootCall = new sspmod_vootgroups_VootCall();
             $vootCall->setHttpClient(new \Guzzle\Http\Client());
-            if (false === $vootCall->makeCall($accessToken->getAccessToken(), $attributes)) {
-                // unable to fetch groups, something is wrong with the token?
-                throw new Exception("unable to fetch groups with seemingly valid bearer token");
+            if (false === $vootCall->makeCall($this->diContainer['vootEndpoint'], $accessToken->getAccessToken(), $attributes)) {
+                // the token was not accepted, delete it
+                $client->deleteAccessToken();
+                throw new \Exception("token revoked?");
             }
         }
     }

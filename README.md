@@ -37,16 +37,49 @@ fetching to.
                 'authorize_endpoint' => 'http://localhost/frkonext/php-oauth/authorize.php',
                 'client_id' => 'foo',
                 'client_secret' => 'foobar',
-                'token_endpoint' => 'http://localhost/frkonext/php-oauth/token.php' 
+                'token_endpoint' => 'http://localhost/frkonext/php-oauth/token.php'
+                'storage' => array(
+                    'type' => 'SessionStorage'
+                ), 
             ),            
         ),
     ),
 
-Above, the OAuth configuration is shown, but in addition you also need to 
+If you want to use the PDO backed storage for using an SQL database you can 
+modify the above storage configuration from:
+
+    'storage' => array(
+        'type' => 'SessionStorage'
+    ), 
+
+to this is you are using SQLite:
+
+    'storage' => array(
+        'type' => 'PdoStorage',
+        'dsn' => 'sqlite:/var/simplesamlphp/data/oauth.sqlite',
+        'username' => null,
+        'password' => null
+    ), 
+
+Make sure this `oauth.sqlite` file is writable by the web server. This may 
+involve setting file permissions, dealing with SELinux and possibly some web
+server configuration.
+
+See the [PDO documentation](http://www.php.net/manual/en/pdo.drivers.php) on 
+how to use your favorite database. The database schema for storing the tokens 
+can be found as part of the OAuth client and can be found in `schema/db.sql`. 
+It was tested with SQLite and MySQL. Importing this schema and configuring the
+database are out of scope here.
+
+The schema can be found in `vendor/fkooman/php-oauth-client/schema/db.sql` 
+after running Composer (see Installation section).
+
+# Registration   
+The OAuth configuration is shown above, but in addition you also need to 
 register a `redirect_uri` at the OAuth 2.0 service. This depends on where
 simpleSAMLphp is installed. For example:
 
     http://localhost/simplesaml/module.php/vootgroups/callback.php
 
-This assumes that simpleSAMLphp is installed at `http://localhost/simplesaml`,
-modify the URL accordingly.
+This assumes that simpleSAMLphp is installed and reachable through 
+`http://localhost/simplesaml`, modify the URL accordingly.
