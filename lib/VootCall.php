@@ -14,7 +14,7 @@ class sspmod_vootgroups_VootCall
         $this->httpClient = $httpClient;
     }
 
-    public function makeCall($vootEndPoint, $bearerToken, &$attributes)
+    public function makeCall($vootEndPoint, $bearerToken, &$attributes, $targetAttribute = "isMemberOf")
     {
         try {
             $bearerAuth = new \fkooman\Guzzle\Plugin\BearerAuth\BearerAuth($bearerToken);
@@ -27,10 +27,10 @@ class sspmod_vootgroups_VootCall
                 $groups[] = $e['id'];
             }
 
-            if (isset($attributes['groups'])) {
-                $attributes['groups'] = array_merge($attributes['groups'], $groups);
+            if (isset($attributes[$targetAttribute])) {
+                $attributes[$targetAttribute] = array_merge($attributes[$targetAttribute], $groups);
             } else {
-                $attributes['groups'] = $groups;
+                $attributes[$targetAttribute] = $groups;
             }
 
             return true;

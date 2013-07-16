@@ -41,6 +41,7 @@ fetching to.
                 'storage' => array(
                     'type' => 'SessionStorage'
                 ), 
+                'targetAttribute' => 'isMemberOf',
             ),            
         ),
     ),

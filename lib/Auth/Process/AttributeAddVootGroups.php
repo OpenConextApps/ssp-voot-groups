@@ -66,7 +66,7 @@ class sspmod_vootgroups_Auth_Process_AttributeAddVootGroups extends SimpleSAML_A
         } else {
             $vootCall = new sspmod_vootgroups_VootCall();
             $vootCall->setHttpClient(new \Guzzle\Http\Client());
-            if (false === $vootCall->makeCall($this->diContainer['vootEndpoint'], $accessToken->getAccessToken(), $attributes)) {
+            if (false === $vootCall->makeCall($this->diContainer['vootEndpoint'], $accessToken->getAccessToken(), $attributes, $this->diContainer['targetAttribute'])) {
                 // the token was not accepted, delete it
                 $client->deleteAccessToken();
                 throw new \Exception("token revoked?");

@@ -25,7 +25,7 @@ $attributes =& $state['Attributes'];
 $vootCall = new sspmod_vootgroups_VootCall();
 $vootCall->setHttpClient(new \Guzzle\Http\Client());
 
-if (false === $vootCall->makeCall($diContainer['vootEndpoint'], $accessToken->getAccessToken(), $attributes)) {
+if (false === $vootCall->makeCall($diContainer['vootEndpoint'], $accessToken->getAccessToken(), $attributes, $diContainer['targetAttribute'])) {
     // unable to fetch groups, something is wrong with the token?
     throw new Exception("unable to fetch groups with seemingly valid bearer token");
 }
