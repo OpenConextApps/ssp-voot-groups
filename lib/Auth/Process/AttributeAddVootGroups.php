@@ -55,7 +55,7 @@ class sspmod_vootgroups_Auth_Process_AttributeAddVootGroups extends SimpleSAML_A
         $client->setHttpClient(new \Guzzle\Http\Client());
 
         $client->setUserId($attributes['uid'][0]);
-        $client->setScope(array("http://openvoot.org/groups"));
+        $client->setScope(array($this->diContainer['vootScope']));
 
         $this->getTokenAndGroups($client, $state);
     }
@@ -79,7 +79,7 @@ class sspmod_vootgroups_Auth_Process_AttributeAddVootGroups extends SimpleSAML_A
                 // after the token is deleted we get an access token again and
                 // try again
                 // FIXME: loop detection? but how to implement this...?
-                $this->getTokenAndGroups($api);
+                $this->getTokenAndGroups($api, $state);
             }
         }
     }

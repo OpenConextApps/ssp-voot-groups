@@ -32,12 +32,13 @@ fetching to.
     'authproc' => array(
         40 => array (
             'class' => 'vootgroups:AttributeAddVootGroups',
+            'vootScope' => 'http://openvoot.org/groups',
             'vootEndpoint' => 'https://voot.example.org/groups/@me',
             'targetAttribute' => 'isMemberOf',
             'clientConfig' => array (
                 'authorize_endpoint' => 'https://auth.example.org/authorize',
                 'client_id' => 'my_client_id',
-                'client_secret' => 'my_client_secret,
+                'client_secret' => 'my_client_secret',
                 'token_endpoint' => 'https://auth.example.org/token',
             ),
             'storage' => array (
@@ -85,7 +86,11 @@ The OAuth configuration is shown above, but in addition you also need to
 register a `redirect_uri` at the OAuth 2.0 service. This depends on where
 simpleSAMLphp is installed. For example:
 
-    http://localhost/simplesaml/module.php/vootgroups/callback.php
+    https://service.example.org/simplesaml/module.php/vootgroups/callback.php
 
 This assumes that simpleSAMLphp is installed and reachable through 
-`http://localhost/simplesaml`, modify the URL accordingly.
+`http://service.example.org/simplesaml`, modify the URL accordingly.
+
+If you need to provide the `redirect_uri` as part of the authorize request as 
+well you can also add the `redirect_uri` parameter to the `clientConfig` 
+section of the configuration.

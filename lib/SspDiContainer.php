@@ -20,6 +20,10 @@ class sspmod_vootgroups_SspDiContainer extends \Pimple
             return $config['vootEndpoint'];
         };
 
+        $this['vootScope'] = function() use ($config) {
+            return isset($config['vootScope']) ? $config['vootScope'] : "http://openvoot.org/groups";
+        };
+
         $this['targetAttribute'] = function() use ($config) {
             return isset($config['targetAttribute']) ? $config['targetAttribute'] : "isMemberOf";
         };
