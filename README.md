@@ -122,5 +122,8 @@ we use `eduPersonPricipalName`. Another candidate is `eduPersonTargetedID`.
 You may need to request permission to use this attribute when connecting your
 service to SURFconext.
 
+If you have a `client_id` with a colon (`:`) in it, make sure to also set
+`'credentials_in_request_body' => true` in the `clientConfig` section.
+ 
 Of course, you can replace `SessionStorage` with `PdoStorage` (see above) for
 production setups.
