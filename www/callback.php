@@ -13,7 +13,7 @@ $config = $state['vootgroups:config'];
 $diContainer = new sspmod_vootgroups_SspDiContainer($config);
 
 $cb = new \fkooman\OAuth\Client\Callback();
-$cb->setClientConfig("foo", $diContainer['clientConfig']);
+$cb->setClientConfig("ssp-voot-groups", $diContainer['clientConfig']);
 $cb->setStorage($diContainer['storage']);
 $cb->setHttpClient(new \Guzzle\Http\Client());
 

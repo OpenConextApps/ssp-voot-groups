@@ -94,3 +94,26 @@ This assumes that simpleSAMLphp is installed and reachable through
 If you need to provide the `redirect_uri` as part of the authorize request as 
 well you can also add the `redirect_uri` parameter to the `clientConfig` 
 section of the configuration.
+
+# SURFconext
+For SURFconext you can use the following configuration:
+
+    40 => array (
+        'class' => 'vootgroups:AttributeAddVootGroups',
+        'vootEndpoint' => 'https://api.surfconext.nl/v1/social/rest/groups/@me',
+        'vootScope' => 'read',
+        'targetAttribute' => 'isMemberOf',
+        'clientConfig' => array (
+            'authorize_endpoint' => 'https://api.surfconext.nl/v1/oauth2/authorize',
+            'redirect_uri' => 'https://service.example.org/simplesaml/module.php/vootgroups/callback.php',
+            'client_id' => 'MY_SURFCONEXT_CLIENT_ID',
+            'client_secret' => 'MY_SURFCONEXT_CLIENT_SECRET',
+            'token_endpoint' => 'https://api.surfconext.nl/v1/oauth2/token',
+        ),
+        'storage' => array (
+            'type' => 'SessionStorage',
+        ),
+    ),
+    
+Of course, you can replace `SessionStorage` with `PdoStorage` (see above) for
+production setups.

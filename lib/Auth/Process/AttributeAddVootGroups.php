@@ -50,7 +50,7 @@ class sspmod_vootgroups_Auth_Process_AttributeAddVootGroups extends SimpleSAML_A
 
         $client = new \fkooman\OAuth\Client\Api();
 
-        $client->setClientConfig("foo", $this->diContainer['clientConfig']);
+        $client->setClientConfig("ssp-voot-groups", $this->diContainer['clientConfig']);
         $client->setStorage($this->diContainer['storage']);
         $client->setHttpClient(new \Guzzle\Http\Client());
 
