@@ -54,7 +54,8 @@ class sspmod_vootgroups_Auth_Process_AttributeAddVootGroups extends SimpleSAML_A
         $client->setStorage($this->diContainer['storage']);
         $client->setHttpClient(new \Guzzle\Http\Client());
 
-        $client->setUserId($attributes['uid'][0]);
+        $userIdAttribute = $this->diContainer['userIdAttribute'];
+        $client->setUserId($attributes[$userIdAttribute][0]);
         $client->setScope(array($this->diContainer['vootScope']));
 
         $this->getTokenAndGroups($client, $state);

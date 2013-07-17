@@ -34,6 +34,7 @@ fetching to.
             'class' => 'vootgroups:AttributeAddVootGroups',
             'vootScope' => 'http://openvoot.org/groups',
             'vootEndpoint' => 'https://voot.example.org/groups/@me',
+            'userIdAttribute' => 'uid',
             'targetAttribute' => 'isMemberOf',
             'clientConfig' => array (
                 'authorize_endpoint' => 'https://auth.example.org/authorize',
@@ -103,6 +104,7 @@ For SURFconext you can use the following configuration:
         'vootEndpoint' => 'https://api.surfconext.nl/v1/social/rest/groups/@me',
         'vootScope' => 'read',
         'targetAttribute' => 'isMemberOf',
+        'userIdAttribute' => 'urn:mace:dir:attribute-def:eduPersonPrincipalName',
         'clientConfig' => array (
             'authorize_endpoint' => 'https://api.surfconext.nl/v1/oauth2/authorize',
             'redirect_uri' => 'https://service.example.org/simplesaml/module.php/vootgroups/callback.php',
@@ -114,6 +116,11 @@ For SURFconext you can use the following configuration:
             'type' => 'SessionStorage',
         ),
     ),
-    
+
+NOTE: you need to use an attribute for `userIdAttribute`. In the example
+we use `eduPersonPricipalName`. Another candidate is `eduPersonTargetedID`. 
+You may need to request permission to use this attribute when connecting your
+service to SURFconext.
+
 Of course, you can replace `SessionStorage` with `PdoStorage` (see above) for
 production setups.
