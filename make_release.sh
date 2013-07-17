@@ -3,6 +3,7 @@
 RELEASE_DIR=${HOME}/Releases
 GITHUB_USER=fkooman
 PROJECT_NAME=ssp-voot-groups
+TARGET_DIR=vootgroups
 
 if [ -z "$1" ]
 then
@@ -54,12 +55,14 @@ rm -rf ${RELEASE_DIR}/${PROJECT_NAME}/.git
 rm -f ${RELEASE_DIR}/${PROJECT_NAME}/.gitignore
 rm -f ${RELEASE_DIR}/${PROJECT_NAME}/composer.json
 rm -f ${RELEASE_DIR}/${PROJECT_NAME}/composer.lock
+rm -f ${RELEASE_DIR}/${PROJECT_NAME}/make_release.sh
 )
 
 # create tarball
 (
 cd ${RELEASE_DIR}
-tar -czf ${PROJECT_NAME}-${TAG}.tar.gz ${PROJECT_NAME}
+mv ${PROJECT_NAME} ${TARGET_DIR}
+tar -czf ${PROJECT_NAME}-${TAG}.tar.gz ${TARGET_DIR}
 )
 
 # create checksum file
