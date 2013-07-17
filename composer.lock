@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "b2280bd9561dc665f826731caf7754bb",
+    "hash": "fbcc4bae7152a5e19491f3865b35c88f",
     "packages": [
         {
             "name": "fkooman/guzzle-bearer-auth-plugin",
@@ -45,16 +45,16 @@
         },
         {
             "name": "fkooman/php-oauth-client",
-            "version": "dev-lib-only",
+            "version": "0.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/fkooman/php-oauth-client.git",
-                "reference": "c97a28d2c1827a4f91269159ba9de07d1ea8ad60"
+                "reference": "0.1.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fkooman/php-oauth-client/zipball/c97a28d2c1827a4f91269159ba9de07d1ea8ad60",
-                "reference": "c97a28d2c1827a4f91269159ba9de07d1ea8ad60",
+                "url": "https://api.github.com/repos/fkooman/php-oauth-client/zipball/0.1.0",
+                "reference": "0.1.0",
                 "shasum": ""
             },
             "require": {
@@ -81,7 +81,7 @@
                 }
             ],
             "description": "PHP OAuth 2.0 Client",
-            "time": "2013-07-15 19:15:13"
+            "time": "2013-07-17 11:33:34"
         },
         {
             "name": "guzzle/guzzle",
@@ -323,24 +323,24 @@
         },
         {
             "name": "symfony/event-dispatcher",
-            "version": "v2.3.1",
+            "version": "v2.3.2",
             "target-dir": "Symfony/Component/EventDispatcher",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/EventDispatcher.git",
-                "reference": "v2.3.1"
+                "reference": "v2.3.2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/EventDispatcher/zipball/v2.3.1",
-                "reference": "v2.3.1",
+                "url": "https://api.github.com/repos/symfony/EventDispatcher/zipball/v2.3.2",
+                "reference": "v2.3.2",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3"
             },
             "require-dev": {
-                "symfony/dependency-injection": ">=2.0,<3.0"
+                "symfony/dependency-injection": "~2.0"
             },
             "suggest": {
                 "symfony/dependency-injection": "",
@@ -383,9 +383,9 @@
 
     ],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "fkooman/php-oauth-client": 20
-    },
+    "stability-flags": [
+
+    ],
     "platform": [
 
     ],

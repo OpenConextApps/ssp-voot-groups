@@ -2,7 +2,7 @@
     "name": "fkooman/ssp-voot-groups", 
     "require": {
         "fkooman/guzzle-bearer-auth-plugin": "0.2.1", 
-        "fkooman/php-oauth-client": "dev-lib-only", 
+        "fkooman/php-oauth-client": "0.1.0",
         "pimple/pimple": "v1.0.2"
     }
 }
