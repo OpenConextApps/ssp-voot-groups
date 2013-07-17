@@ -21,7 +21,7 @@ can also install a simpleSAMLphp SAML proxy and install the module.
 You can check the 
 [releases](https://github.com/fkooman/ssp-voot-groups/releases) page to 
 download a complete simpleSAMLphp module ready for install, or read below to
-install yourself from Git using Composer.
+install yourself from Git and run Composer yourself.
 
 You can install this module in the `modules` directory of simpleSAMLphp. We 
 assume you installed simpleSAMLphp in `/var/simplesamlphp`:
