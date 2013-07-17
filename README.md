@@ -2,9 +2,26 @@
 This is a module for [simpleSAMLphp](http://www.simplesamlphp.org) to fetch 
 group memberships from an API service protected with OAuth 2.0 using the 
 [VOOT](https://github.com/fkooman/voot-specification/blob/master/VOOT.md) 
-protocol.
+protocol and add them to the list of attributes received from the identity
+provider.
+
+# Why?
+Because it is cumbersome to implement your own OAuth 2.0 and REST API client to 
+fetch group memberships while they could also be made part of the received 
+attributes.
+
+# Who?
+If you are a service provider that connects to an identity federation that 
+supports VOOT to publish group membership information for users logging into 
+your service, and are currently using simpleSAMLphp or wants to implement a
+simpleSAMLphp proxy in front of your actual service provider.
 
 # Installation
+You can check the 
+[releases](https://github.com/fkooman/ssp-voot-groups/releases) page to 
+download a complete simpleSAMLphp module ready for install, or read below to
+install yourself from Git using Composer.
+
 You can install this module in the `modules` directory of simpleSAMLphp. We 
 assume you installed simpleSAMLphp in `/var/simplesamlphp`:
 
