@@ -8,13 +8,14 @@ provider.
 # Why?
 Because it is cumbersome to implement your own OAuth 2.0 and REST API client to 
 fetch group memberships while they could also be made part of the received 
-attributes.
+attributes when you are already a SAML service provider.
 
 # Who?
 If you are a service provider that connects to an identity federation that 
 supports VOOT to publish group membership information for users logging into 
-your service, and are currently using simpleSAMLphp or wants to implement a
-simpleSAMLphp proxy in front of your actual service provider.
+your service. If you are currently already using simpleSAMLphp as SAML SP 
+software you can just install the module. If you are using other software you
+can also install a simpleSAMLphp SAML proxy and install the module.
 
 # Installation
 You can check the 
