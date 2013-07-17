@@ -32,39 +32,44 @@ fetching to.
     'authproc' => array(
         40 => array (
             'class' => 'vootgroups:AttributeAddVootGroups',
-            'vootEndpoint' => 'http://localhost/frkonext/php-voot-proxy/voot.php/groups/@me',
-            'clientConfig' => array(
-                'authorize_endpoint' => 'http://localhost/frkonext/php-oauth/authorize.php',
-                'client_id' => 'foo',
-                'client_secret' => 'foobar',
-                'token_endpoint' => 'http://localhost/frkonext/php-oauth/token.php'
-                'storage' => array(
-                    'type' => 'SessionStorage'
-                ), 
-                'targetAttribute' => 'isMemberOf',
-            ),            
+            'vootEndpoint' => 'https://voot.example.org/groups/@me',
+            'targetAttribute' => 'isMemberOf',
+            'clientConfig' => array (
+                'authorize_endpoint' => 'https://auth.example.org/authorize',
+                'client_id' => 'my_client_id',
+                'client_secret' => 'my_client_secret,
+                'token_endpoint' => 'https://auth.example.org/token',
+            ),
+            'storage' => array (
+                'type' => 'SessionStorage',
+            ),
         ),
     ),
 
 If you want to use the PDO backed storage for using an SQL database you can 
 modify the above storage configuration from:
 
-    'storage' => array(
-        'type' => 'SessionStorage'
-    ), 
+    'storage' => array (
+        'type' => 'SessionStorage',
+    ),
 
 to this is you are using SQLite:
 
     'storage' => array(
         'type' => 'PdoStorage',
         'dsn' => 'sqlite:/var/simplesamlphp/data/oauth.sqlite',
-        'username' => null,
-        'password' => null
-    ), 
+    ),
 
 Make sure this `oauth.sqlite` file is writable by the web server. This may 
 involve setting file permissions, dealing with SELinux and possibly some web
-server configuration.
+server configuration. If you are using MySQL you could use the following:
+
+    'storage' => array(
+        'type' => 'PdoStorage',
+        'dsn' => 'mysql:host=localhost;dbname=oauth',
+        'username' => 'foo',
+        'password' => 'bar',
+    ), 
 
 See the [PDO documentation](http://www.php.net/manual/en/pdo.drivers.php) on 
 how to use your favorite database. The database schema for storing the tokens 
