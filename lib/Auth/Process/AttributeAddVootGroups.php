@@ -57,20 +57,31 @@ class sspmod_vootgroups_Auth_Process_AttributeAddVootGroups extends SimpleSAML_A
         $client->setUserId($attributes['uid'][0]);
         $client->setScope(array("http://openvoot.org/groups"));
 
-        $accessToken = $client->getAccessToken();
+        $this->getTokenAndGroups($client, $state);
+    }
+
+    private function getTokenAndGroups(\fkooman\OAuth\Client\Api $api, &$state)
+    {
+        $attributes =& $state['Attributes'];
+
+        $accessToken = $api->getAccessToken();
         if (false === $accessToken) {
             // we don't have an access token, get a new one
             $id = SimpleSAML_Auth_State::saveState($state, 'vootgroups:authorize');
-            $client->setState($id);
-            SimpleSAML_Utilities::redirect($client->getAuthorizeUri());
+            $api->setState($id);
+            SimpleSAML_Utilities::redirect($api->getAuthorizeUri());
         } else {
             $vootCall = new sspmod_vootgroups_VootCall();
             $vootCall->setHttpClient(new \Guzzle\Http\Client());
             if (false === $vootCall->makeCall($this->diContainer['vootEndpoint'], $accessToken->getAccessToken(), $attributes, $this->diContainer['targetAttribute'])) {
                 // the token was not accepted, delete it
-                $client->deleteAccessToken();
-                throw new \Exception("token revoked?");
+                $api->deleteAccessToken();
+                // after the token is deleted we get an access token again and
+                // try again
+                // FIXME: loop detection? but how to implement this...?
+                $this->getTokenAndGroups($api);
             }
         }
     }
+
 }
