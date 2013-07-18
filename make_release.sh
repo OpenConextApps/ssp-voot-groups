@@ -29,7 +29,7 @@ else
 fi
 
 mkdir -p ${RELEASE_DIR}
-rm -rf ${RELEASE_DIR}/${PROJECT_NAME}
+rm -rf ${RELEASE_DIR}/${TARGET_DIR}
 
 # get Composer
 (
