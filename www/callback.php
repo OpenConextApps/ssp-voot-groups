@@ -12,22 +12,29 @@ $state = SimpleSAML_Auth_State::loadState($id, 'vootgroups:authorize');
 $config = $state['vootgroups:config'];
 $diContainer = new sspmod_vootgroups_SspDiContainer($config);
 
-$cb = new \fkooman\OAuth\Client\Callback();
-$cb->setClientConfig("ssp-voot-groups", $diContainer['clientConfig']);
-$cb->setStorage($diContainer['storage']);
-$cb->setHttpClient(new \Guzzle\Http\Client());
+try {
+    $cb = new \fkooman\OAuth\Client\Callback();
+    $cb->setClientConfig("ssp-voot-groups", $diContainer['clientConfig']);
+    $cb->setStorage($diContainer['storage']);
+    $cb->setHttpClient(new \Guzzle\Http\Client());
+    $accessToken = $cb->handleCallback($_GET);
 
-$accessToken = $cb->handleCallback($_GET);
+    // obtain attributes from state
+    $attributes =& $state['Attributes'];
 
-// obtain attributes from state
-$attributes =& $state['Attributes'];
+    $vootCall = new sspmod_vootgroups_VootCall();
+    $vootCall->setHttpClient(new \Guzzle\Http\Client());
 
-$vootCall = new sspmod_vootgroups_VootCall();
-$vootCall->setHttpClient(new \Guzzle\Http\Client());
-
-if (false === $vootCall->makeCall($diContainer['vootEndpoint'], $accessToken->getAccessToken(), $attributes, $diContainer['targetAttribute'])) {
-    // unable to fetch groups, something is wrong with the token?
-    throw new Exception("unable to fetch groups with seemingly valid bearer token");
+    if (false === $vootCall->makeCall($diContainer['vootEndpoint'], $accessToken->getAccessToken(), $attributes, $diContainer['targetAttribute'])) {
+        // unable to fetch groups, something is wrong with the token?
+        throw new Exception("unable to fetch groups with seemingly valid bearer token");
+    }
+} catch (\fkooman\OAuth\Client\CallbackException $e) {
+    // something went wrong with the callback, maybe the user did not
+    // agree to the release, or maybe something else was up.
+    // FIXME: we should be more fine grained here!
+    // for now we just continue without notifying the user, without adding the
+    // groups...
 }
 
 // FIXME: the resumeProcessing does not work yet... how do you deal with this?!
