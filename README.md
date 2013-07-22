@@ -5,6 +5,8 @@ group memberships from an API service protected with OAuth 2.0 using the
 protocol and add them to the list of attributes received from the identity
 provider.
 
+![ssp-voot-groups](https://github.com/fkooman/ssp-voot-groups/raw/master/docs/ssp-voot-groups.png)
+
 # Why?
 Because it is cumbersome to implement your own OAuth 2.0 and REST API client to 
 fetch group memberships while they could also be made part of the received 
