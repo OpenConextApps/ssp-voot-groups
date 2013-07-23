@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "fbcc4bae7152a5e19491f3865b35c88f",
+    "hash": "de6f0b3de4cff545eceeba17879cdaff",
     "packages": [
         {
             "name": "fkooman/guzzle-bearer-auth-plugin",
@@ -45,16 +45,16 @@
         },
         {
             "name": "fkooman/php-oauth-client",
-            "version": "0.1.0",
+            "version": "0.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/fkooman/php-oauth-client.git",
-                "reference": "0.1.0"
+                "reference": "0.1.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fkooman/php-oauth-client/zipball/0.1.0",
-                "reference": "0.1.0",
+                "url": "https://api.github.com/repos/fkooman/php-oauth-client/zipball/0.1.1",
+                "reference": "0.1.1",
                 "shasum": ""
             },
             "require": {
@@ -81,7 +81,7 @@
                 }
             ],
             "description": "PHP OAuth 2.0 Client",
-            "time": "2013-07-17 11:33:34"
+            "time": "2013-07-23 19:53:19"
         },
         {
             "name": "guzzle/guzzle",
