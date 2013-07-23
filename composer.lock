@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "de6f0b3de4cff545eceeba17879cdaff",
+    "hash": "6b9d86c3870f51cbb355aaac3ccfd281",
     "packages": [
         {
             "name": "fkooman/guzzle-bearer-auth-plugin",
