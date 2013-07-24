@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "6b9d86c3870f51cbb355aaac3ccfd281",
+    "hash": "fde2aab6e4953f80d7913bd0a58d789e",
     "packages": [
         {
             "name": "fkooman/guzzle-bearer-auth-plugin",
@@ -45,16 +45,16 @@
         },
         {
             "name": "fkooman/php-oauth-client",
-            "version": "0.1.1",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/fkooman/php-oauth-client.git",
-                "reference": "0.1.1"
+                "reference": "c43e447c64b86d24e32e034644d75e0c44916c3e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fkooman/php-oauth-client/zipball/0.1.1",
-                "reference": "0.1.1",
+                "url": "https://api.github.com/repos/fkooman/php-oauth-client/zipball/c43e447c64b86d24e32e034644d75e0c44916c3e",
+                "reference": "c43e447c64b86d24e32e034644d75e0c44916c3e",
                 "shasum": ""
             },
             "require": {
@@ -81,7 +81,7 @@
                 }
             ],
             "description": "PHP OAuth 2.0 Client",
-            "time": "2013-07-23 19:53:19"
+            "time": "2013-07-24 12:33:45"
         },
         {
             "name": "guzzle/guzzle",
@@ -383,9 +383,9 @@
 
     ],
     "minimum-stability": "stable",
-    "stability-flags": [
-
-    ],
+    "stability-flags": {
+        "fkooman/php-oauth-client": 20
+    },
     "platform": [
 
     ],

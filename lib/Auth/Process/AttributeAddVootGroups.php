@@ -48,39 +48,32 @@ class sspmod_vootgroups_Auth_Process_AttributeAddVootGroups extends SimpleSAML_A
 
         $state['vootgroups:config'] = $this->config;
 
-        $client = new \fkooman\OAuth\Client\Api();
-
-        $client->setClientConfig("ssp-voot-groups", $this->diContainer['clientConfig']);
-        $client->setStorage($this->diContainer['storage']);
-        $client->setHttpClient(new \Guzzle\Http\Client());
-
+        $client = new \fkooman\OAuth\Client\Api("ssp-voot-groups", $this->diContainer['clientConfig'], $this->diContainer['storage'], new \Guzzle\Http\Client());
         $userIdAttribute = $this->diContainer['userIdAttribute'];
-        $client->setUserId($attributes[$userIdAttribute][0]);
-        $client->setScope(array($this->diContainer['vootScope']));
+        $context = new \fkooman\OAuth\Client\Context($attributes[$userIdAttribute][0], array($this->diContainer['vootScope']));
 
-        $this->getTokenAndGroups($client, $state);
+        $this->getTokenAndGroups($client, $context, $state);
     }
 
-    private function getTokenAndGroups(\fkooman\OAuth\Client\Api $api, &$state)
+    private function getTokenAndGroups(\fkooman\OAuth\Client\Api $api, \fkooman\OAuth\Client\Context $context, &$state)
     {
         $attributes =& $state['Attributes'];
 
-        $accessToken = $api->getAccessToken();
+        $accessToken = $api->getAccessToken($context);
         if (false === $accessToken) {
             // we don't have an access token, get a new one
             $id = SimpleSAML_Auth_State::saveState($state, 'vootgroups:authorize');
-            $api->setState($id);
-            SimpleSAML_Utilities::redirect($api->getAuthorizeUri());
+            SimpleSAML_Utilities::redirect($api->getAuthorizeUri($context, $id));
         } else {
             $vootCall = new sspmod_vootgroups_VootCall();
             $vootCall->setHttpClient(new \Guzzle\Http\Client());
-            if (false === $vootCall->makeCall($this->diContainer['vootEndpoint'], $accessToken->getAccessToken(), $attributes, $this->diContainer['targetAttribute'])) {
+            if (false === $vootCall->makeCall($this->diContainer['vootEndpoint'], $accessToken->getAccessToken($context), $attributes, $this->diContainer['targetAttribute'])) {
                 // the token was not accepted, delete it
-                $api->deleteAccessToken();
+                $api->deleteAccessToken($context);
                 // after the token is deleted we get an access token again and
                 // try again
                 // FIXME: loop detection? but how to implement this...?
-                $this->getTokenAndGroups($api, $state);
+                $this->getTokenAndGroups($api, $context, $state);
             }
         }
     }

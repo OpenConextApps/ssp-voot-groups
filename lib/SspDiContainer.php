@@ -9,7 +9,7 @@ class sspmod_vootgroups_SspDiContainer extends \Pimple
                 throw new \Exception("missing configuration option 'clientConfig'");
             }
 
-            return \fkooman\OAuth\Client\ClientConfig::fromArray($config['clientConfig']);
+            return new \fkooman\OAuth\Client\ClientConfig($config['clientConfig']);
         };
 
         $this['vootEndpoint'] = function() use ($config) {

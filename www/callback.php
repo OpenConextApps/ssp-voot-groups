@@ -13,10 +13,7 @@ $config = $state['vootgroups:config'];
 $diContainer = new sspmod_vootgroups_SspDiContainer($config);
 
 try {
-    $cb = new \fkooman\OAuth\Client\Callback();
-    $cb->setClientConfig("ssp-voot-groups", $diContainer['clientConfig']);
-    $cb->setStorage($diContainer['storage']);
-    $cb->setHttpClient(new \Guzzle\Http\Client());
+    $cb = new \fkooman\OAuth\Client\Callback("ssp-voot-groups", $diContainer['clientConfig'], $diContainer['storage'], new \Guzzle\Http\Client());
     $accessToken = $cb->handleCallback($_GET);
 
     // obtain attributes from state
