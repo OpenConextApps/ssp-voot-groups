@@ -24,15 +24,14 @@ try {
 
     if (false === $vootCall->makeCall($diContainer['vootEndpoint'], $accessToken->getAccessToken(), $attributes, $diContainer['targetAttribute'])) {
         // unable to fetch groups, something is wrong with the token?
-        throw new Exception("unable to fetch groups with seemingly valid bearer token");
+        throw new \Exception("unable to fetch groups with seemingly valid bearer token");
     }
-} catch (\fkooman\OAuth\Client\CallbackException $e) {
-    // something went wrong with the callback, maybe the user did not
-    // agree to the release, or maybe something else was up.
-    // FIXME: we should be more fine grained here!
-    // for now we just continue without notifying the user, without adding the
-    // groups...
+} catch (\fkooman\OAuth\Client\AuthorizeException $e) {
+    // we just continue as if nothing happened, there will be no groups in
+    // the assertion... The user probably did not agree to release groups
 }
+// any other exception is unexpected and not part of the normal flow, we give
+// this to simpleSAMLphp to deal with...
 
 // FIXME: the resumeProcessing does not work yet... how do you deal with this?!
 SimpleSAML_Auth_ProcessingChain::resumeProcessing($state);
