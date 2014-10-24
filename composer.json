@@ -1,5 +1,5 @@
 {
-    "name": "OpenConextApps/simplesamlphp-module-vootgroups",
+    "name": "openconextapps/simplesamlphp-module-vootgroups",
     "description": "Retrieves group membership information from a VOOT provider and adds the groups to a SAML attribute",
     "type": "simplesamlphp-module",
     "require": {
