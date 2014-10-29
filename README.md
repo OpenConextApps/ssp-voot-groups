@@ -147,3 +147,7 @@ If you have a `client_id` with a colon (`:`) in it, make sure to also set
  
 Of course, you can replace `SessionStorage` with `PdoStorage` (see above) for
 production setups.
+
+# License
+
+This module is free software, licensed under the Apache 2.0 license. See the file LICENSE for details.

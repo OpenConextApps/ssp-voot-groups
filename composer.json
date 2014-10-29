@@ -2,6 +2,7 @@
     "name": "openconextapps/simplesamlphp-module-vootgroups",
     "description": "Retrieves group membership information from a VOOT provider and adds the groups to a SAML attribute",
     "type": "simplesamlphp-module",
+    "license": "Apache-2.0",
     "require": {
         "simplesamlphp/composer-module-installer": "~1.0",
         "fkooman/guzzle-bearer-auth-plugin": "0.2.*",
