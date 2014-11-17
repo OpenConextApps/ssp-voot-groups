@@ -1,11 +1,11 @@
 # Introduction
 This is a module for [simpleSAMLphp](http://www.simplesamlphp.org) to fetch 
 group memberships from an API service protected with OAuth 2.0 using the 
-[VOOT](https://github.com/fkooman/voot-specification/blob/master/VOOT.md) 
+[VOOT](https://github.com/frkosurf/voot-specification/blob/master/VOOT.md)
 protocol and add them to the list of attributes received from the identity
 provider.
 
-![ssp-voot-groups](https://github.com/fkooman/ssp-voot-groups/raw/master/docs/ssp-voot-groups.png)
+![ssp-voot-groups](https://github.com/OpenConextApps/ssp-voot-groups/raw/master/docs/ssp-voot-groups.png)
 
 # Why?
 Because it is cumbersome to implement your own OAuth 2.0 and REST API client to 
@@ -20,29 +20,12 @@ software you can just install the module. If you are using other software you
 can also install a simpleSAMLphp SAML proxy and install the module.
 
 # Installation
-You can check the 
-[releases](https://github.com/fkooman/ssp-voot-groups/releases) page to 
-download a complete simpleSAMLphp module ready for install, or read below to
-install yourself from Git and run Composer yourself.
+This module can be installed with the
+[simpleSAMLphp module installer][https://simplesamlphp.org/modules].
+You need to have [Composer][https://getcomposer.org/]. Then it should
+suffice to run:
 
-You can install this module in the `modules` directory of simpleSAMLphp. We 
-assume you installed simpleSAMLphp in `/var/simplesamlphp`:
-
-    cd /var/simplesamlphp/modules
-    git clone https://github.com/fkooman/ssp-voot-groups.git vootgroups
-
-To enable the module:
-
-    touch /var/simplesamlphp/modules/vootgroups/enable
-
-Now you have to install some dependencies using
-[Composer](http://www.getcomposer.org). There is no external code bundled in 
-the code of this simpleSAMLphp module.
-
-    cd /var/simplesamlphp/modules/vootgroups
-    php /path/to/composer.phar install
-
-That should be all for the installation.
+    composer.phar require openconextapps/simplesamlphp-module-vootgroups
 
 # Configuration
 Below is an example configuration. You can place this in 
