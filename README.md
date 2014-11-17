@@ -21,8 +21,8 @@ can also install a simpleSAMLphp SAML proxy and install the module.
 
 # Installation
 This module can be installed with the
-[simpleSAMLphp module installer][https://simplesamlphp.org/modules].
-You need to have [Composer][https://getcomposer.org/]. Then it should
+[simpleSAMLphp module installer](https://simplesamlphp.org/modules).
+You need to have [Composer](https://getcomposer.org/). Then it should
 suffice to run:
 
     composer.phar require openconextapps/simplesamlphp-module-vootgroups
