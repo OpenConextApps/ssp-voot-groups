@@ -6,7 +6,7 @@
     "require": {
         "simplesamlphp/composer-module-installer": "~1.0",
         "fkooman/guzzle-bearer-auth-plugin": "0.2.*",
-        "fkooman/php-oauth-client": "0.2.*",
+        "fkooman/oauth-client": "0.2.*",
         "pimple/pimple": "1.0.*"
     }
 }
