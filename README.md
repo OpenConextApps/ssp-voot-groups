@@ -113,6 +113,7 @@ For SURFconext you can use the following configuration:
             'redirect_uri' => 'https://service.example.org/simplesaml/module.php/vootgroups/callback.php',
             'client_id' => 'MY_SURFCONEXT_CLIENT_ID',
             'client_secret' => 'MY_SURFCONEXT_CLIENT_SECRET',
+            'credentials_in_request_body' => true,
             'token_endpoint' => 'https://api.surfconext.nl/v1/oauth2/token',
         ),
         'storage' => array (
