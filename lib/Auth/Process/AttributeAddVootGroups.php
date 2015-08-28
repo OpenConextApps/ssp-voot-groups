@@ -1,6 +1,10 @@
 <?php
 
-require_once dirname(dirname(dirname(__DIR__))) . '/vendor/autoload.php';
+// Conditionally include composer autoload file;
+// we don't need it if installed with SSP's composer-module-installer.
+if ( file_exists(dirname(dirname(dirname(__DIR__))) . '/vendor/autoload.php') ) {
+    require_once dirname(dirname(dirname(__DIR__))) . '/vendor/autoload.php';
+}
 
 /**
  * Filter to add group membership to attributes from VOOT provider.

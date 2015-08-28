@@ -1,6 +1,10 @@
 <?php
 
-require_once dirname(__DIR__) . '/vendor/autoload.php';
+// Conditionally include composer autoload file;
+// we don't need it if installed with SSP's composer-module-installer.
+if ( file_exists(dirname(__DIR__) . '/vendor/autoload.php') ) {
+    require_once dirname(__DIR__) . '/vendor/autoload.php';
+}
 
 if (!array_key_exists('state', $_REQUEST)) {
         throw new SimpleSAML_Error_BadRequest('Missing required state query parameter.');
