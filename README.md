@@ -1,9 +1,9 @@
 # Introduction
 This is a module for [simpleSAMLphp](http://www.simplesamlphp.org) to fetch 
 group memberships from an API service protected with OAuth 2.0 using the 
-[VOOT](https://github.com/frkosurf/voot-specification/blob/master/VOOT.md)
-protocol and add them to the list of attributes received from the identity
-provider.
+[VOOT](http://openvoot.org)
+protocol (versions 1 and 2 are supported) and add them to the list of
+attributes received from the identity provider.
 
 ![ssp-voot-groups](https://github.com/OpenConextApps/ssp-voot-groups/raw/master/docs/ssp-voot-groups.png)
 
@@ -28,7 +28,7 @@ suffice to run:
     composer.phar require openconextapps/simplesamlphp-module-vootgroups
 
 # Configuration
-Below is an example configuration. You can place this in 
+Below is an example configuration for VOOT 1.0. You can place this in 
 `metadata/saml20-idp-remote.php` for the IdP you want to attach the group
 fetching to.
 
@@ -50,6 +50,8 @@ fetching to.
             ),
         ),
     ),
+
+For VOOT 2.0, use `/me/groups` as the `vootEndpoint`.
 
 If you want to use the PDO backed storage for using an SQL database you can 
 modify the above storage configuration from:
@@ -100,7 +102,10 @@ well you can also add the `redirect_uri` parameter to the `clientConfig`
 section of the configuration.
 
 # SURFconext
+
 For SURFconext you can use the following configuration:
+
+## SURFconext API v 1 (VOOT 1.0):
 
     40 => array (
         'class' => 'vootgroups:AttributeAddVootGroups',
@@ -115,6 +120,27 @@ For SURFconext you can use the following configuration:
             'client_secret' => 'MY_SURFCONEXT_CLIENT_SECRET',
             'credentials_in_request_body' => true,
             'token_endpoint' => 'https://api.surfconext.nl/v1/oauth2/token',
+            'credentials_in_request_body' => true,
+        ),
+        'storage' => array (
+            'type' => 'SessionStorage',
+        ),
+    ),
+
+## SURFconext API v 2 (VOOT 2.0):
+
+    40 => array (
+        'class' => 'vootgroups:AttributeAddVootGroups',
+        'vootEndpoint' => 'https://voot.surfconext.nl/me/groups',
+        'vootScope' => 'groups',
+        'targetAttribute' => 'isMemberOf',
+        'userIdAttribute' => 'urn:mace:dir:attribute-def:eduPersonPrincipalName',
+        'clientConfig' => array (
+            'authorize_endpoint' => 'https://authz.surfconext.nl/oauth/authorize',
+            'redirect_uri' => 'https://service.example.org/simplesaml/module.php/vootgroups/callback.php',
+            'client_id' => 'MY_SURFCONEXT_CLIENT_ID',
+            'client_secret' => 'MY_SURFCONEXT_CLIENT_SECRET',
+            'token_endpoint' => 'https://authz.surfconext.nl/oauth/token',
         ),
         'storage' => array (
             'type' => 'SessionStorage',

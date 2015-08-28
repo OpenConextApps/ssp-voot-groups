@@ -22,8 +22,14 @@ class sspmod_vootgroups_VootCall
             $response = $this->httpClient->get($vootEndPoint)->send();
             $jsonData = $response->getBody();
             $data = json_decode($jsonData, TRUE);
+
+            // In VOOT1 the groups are in an 'entry' key, in VOOT2 they are one level higher
+            if ( isset($data['entry'])) {
+                $data = $data['entry'];
+            }
+
             $groups = array();
-            foreach ($data['entry'] as $e) {
+            foreach ($data as $e) {
                 $groups[] = $e['id'];
             }
 
