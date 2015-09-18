@@ -75,7 +75,7 @@ shasum ${PROJECT_NAME}-${TAG}.tar.gz > ${PROJECT_NAME}.sha
 (
 if [ -n "$2" ]
 then
-	if [ "$2" == "sign" ]
+	if [ "$2" = "sign" ]
 	then
 		cd ${RELEASE_DIR}
 		gpg -o ${PROJECT_NAME}.sha.gpg  --clearsign ${PROJECT_NAME}.sha
