@@ -120,7 +120,6 @@ For SURFconext you can use the following configuration:
             'client_secret' => 'MY_SURFCONEXT_CLIENT_SECRET',
             'credentials_in_request_body' => true,
             'token_endpoint' => 'https://api.surfconext.nl/v1/oauth2/token',
-            'credentials_in_request_body' => true,
         ),
         'storage' => array (
             'type' => 'SessionStorage',
