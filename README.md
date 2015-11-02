@@ -20,9 +20,11 @@ software you can just install the module. If you are using other software you
 can also install a simpleSAMLphp SAML proxy and install the module.
 
 # Installation
-This module can be installed with the
-[simpleSAMLphp module installer](https://simplesamlphp.org/modules).
-You need to have [Composer](https://getcomposer.org/). Then it should
+This module can be installed in two ways:
+ 1. By unpacking a [release tarball](https://github.com/OpenConextApps/ssp-voot-groups/releases) under the `modules/` directory; or
+ 2. with the [simpleSAMLphp module installer](https://simplesamlphp.org/modules).
+
+For the first option, download `ssp-voot-groups.`_x.y.z_`.tar.gz` and unpack it under your `modules/` directory of simpleSAMLphp. For the second option, you need to have [Composer](https://getcomposer.org/). Then it should
 suffice to run:
 
     composer.phar require openconextapps/simplesamlphp-module-vootgroups
