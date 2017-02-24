@@ -1,7 +1,9 @@
 #!/bin/sh
 
+set -e
+
 RELEASE_DIR=${HOME}/Releases
-GITHUB_USER=fkooman
+GITHUB_USER=OpenConextApps
 PROJECT_NAME=ssp-voot-groups
 TARGET_DIR=vootgroups
 
@@ -34,7 +36,7 @@ rm -rf ${RELEASE_DIR}/${TARGET_DIR}
 # get Composer
 (
 cd ${RELEASE_DIR}
-curl -O http://getcomposer.org/composer.phar
+curl -O https://getcomposer.org/composer.phar
 )
 
 # clone the tag
